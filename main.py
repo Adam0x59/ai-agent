@@ -2,22 +2,42 @@ import os
 import sys
 from dotenv import load_dotenv
 from google import genai
+from google.genai import types
 
 load_dotenv()
 api_key = os.environ.get("GEMINI_API_KEY")
 
 client = genai.Client(api_key=api_key)
 
+
 try:
-    prompt = sys.argv[1]
+    user_prompt = sys.argv[1]
 except IndexError:
     print('Please provide a prompt message.\nUsage: ./main.py <"Prompt message">')
     sys.exit(1)
 
-response = client.models.generate_content(
-    model='gemini-2.0-flash-001', contents=f"{prompt}"
-)
-print(response.text)
-print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
-print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
+messages = [
+    types.Content(role="user", parts=[types.Part(text=user_prompt)]),
+]
 
+try:
+    flags = sys.argv[2:]
+except IndexError:
+    print("No flags specified, continuing...")
+    pass
+
+response = client.models.generate_content(
+    model = 'gemini-2.0-flash-001', 
+    contents = messages,
+)
+
+if "--verbose" in flags:
+    print(f"User prompt: {user_prompt}")
+    print("------------------")
+    print(response.text)
+    print("------------------")
+    print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
+    print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
+    print("------------------")
+else:
+    print(response.text)
