@@ -2,6 +2,7 @@ import unittest
 from functions.get_files_info import *
 from functions.get_files_content import *
 from functions.write_file import *
+from functions.run_python_file import *
 
 class test_get_files_info(unittest.TestCase):
     '''
@@ -36,10 +37,9 @@ class test_get_files_info(unittest.TestCase):
     def test_get_file_content_bin_cat(self):
         output = get_file_content("calculator", "/bin/cat")
         print(output)
-    '''
 
     def test_write_file_lorem(self):
-        output = write_file("calculator", "lorem.txt", "Wait, this isn't lorem ipsum")
+        output = write_file("calculator", "lorem.txt", "wait, this isn't lorem ipsum")
         print(output)
 
     def test_write_file_pkg_morelorem(self):
@@ -48,6 +48,27 @@ class test_get_files_info(unittest.TestCase):
 
     def test_write_file_tmp_temp(self):
         output = write_file("calculator", "/tmp/temp.text", "this should not be allowed")
+        print(output)
+
+    def test_run_python_file(self):
+        output = run_python_file("calculator", "lorem.txt")
+        print(output)
+    '''
+
+    def test_run_python_file_main(self):
+        output = run_python_file("calculator", "main.py")
+        print(output)
+
+    def test_run_python_file_tests(self):
+        output = run_python_file("calculator", "tests.py")
+        print(output)
+
+    def test_run_python_file_dot_dot_main_err(self):
+        output = run_python_file("calculator", "../main.py")
+        print(output)
+
+    def test_run_python_file_nonexistent(self):
+        output = run_python_file("calculator", "nonexistent.py")
         print(output)
 
 if __name__ == '__main__':

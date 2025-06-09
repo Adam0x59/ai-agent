@@ -1,5 +1,6 @@
 import os
 from functions.check_path_inputs import *
+from config import MAX_CHARS
 
 def get_file_content(working_directory, file_path):
 
@@ -17,8 +18,8 @@ def get_file_content(working_directory, file_path):
     except Exception as e:
         return f'Error: {str(e)}'
 
-    if len(file_contents) > 10000:
-        file_contents = file_contents[:10000]
+    if len(file_contents) > MAX_CHARS:
+        file_contents = file_contents[:MAX_CHARS]
         file_contents = file_contents + f'[...File "{file_path}" truncated at 10000 characters]'
 
     return file_contents
