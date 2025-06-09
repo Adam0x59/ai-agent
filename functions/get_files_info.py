@@ -19,7 +19,6 @@ def get_files_info(working_directory, directory=None):
         path_str = os.path.join(directory, file)
         is_dir = os.path.isdir(path_str)
         file_size = os.path.getsize(path_str) if not is_dir else os.path.getsize(path_str)
-
         file_dict[file] = {"file_size": file_size, "is_dir": is_dir}
     
     files_string = ""

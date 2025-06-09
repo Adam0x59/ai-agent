@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 def check_path_inputs(working_directory, path_to_check):
@@ -6,7 +5,11 @@ def check_path_inputs(working_directory, path_to_check):
 
     if working_directory is None:
         return f"Error: working_directory - {working_directory} is empty!"
+    
     working_directory = Path(working_directory).expanduser().resolve()
+    
+    if not working_directory.exists():
+        return f"Error: Working directory {working_directory} does not exist"
     
     wd_absolute = working_directory.is_absolute()
 
@@ -23,6 +26,8 @@ def check_path_inputs(working_directory, path_to_check):
 
     path_dir = path_to_check.is_dir()
     wd_dir = working_directory.is_dir()
+    path_file = path_to_check.is_file()
+    wd_file = path_to_check.is_file()
 
     try:
         path_to_check.relative_to(working_directory)
@@ -31,7 +36,7 @@ def check_path_inputs(working_directory, path_to_check):
         path_to_check_rel = False
 
     return {
-            "working_dir": working_directory, "wd_data":{ "dir": wd_dir, "absolute": wd_absolute}, 
-            "path_to_check": path_to_check, "path_data":{ "dir": path_dir , "absolute": path_absolute, "path_is_working_dir": path_is_working_dir}, 
+            "working_dir": working_directory, "wd_data":{ "dir": wd_dir, "file": wd_file, "absolute": wd_absolute}, 
+            "path_to_check": path_to_check, "path_data":{ "dir": path_dir , "file": path_file, "absolute": path_absolute, "path_is_working_dir": path_is_working_dir}, 
             "path_to_check_rel": path_to_check_rel, 
                 }
