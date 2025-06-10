@@ -24,6 +24,10 @@ class TestCalculator(unittest.TestCase):
         result = self.calculator.evaluate("10 / 2")
         self.assertEqual(result, 5)
 
+    def test_order_of_operations(self):
+        result = self.calculator.evaluate("3 + 7 * 2")
+        self.assertEqual(result, 17)
+
     def test_nested_expression(self):
         result = self.calculator.evaluate("3 * 4 + 5")
         self.assertEqual(result, 17)

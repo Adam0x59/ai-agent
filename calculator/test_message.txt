@@ -1,0 +1,6 @@
+- tests.py
+- main.py
+- pkg
+- test_message.txt
+- README.md
+- lorem.txt
